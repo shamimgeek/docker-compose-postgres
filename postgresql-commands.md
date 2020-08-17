@@ -39,3 +39,11 @@ CREATE DATABASE
 postgres=# 
 
 ```
+**Connect to Database test**
+```
+postgres=# \c test
+You are now connected to database "test" as user "postgres".
+test=# 
+```
+
+
