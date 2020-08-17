@@ -27,6 +27,8 @@
 ```
 docker exec -it postgres psql -U postgres
 ```
+for more postgresql commands check [here](./postgresql-commands.md)
+
 ## Access to PgAdmin: 
 - **URL:** `http://localhost:8080`
 - **Username:** shamim.rhce@gmail.com (as a default)
