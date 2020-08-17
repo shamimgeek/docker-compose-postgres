@@ -25,3 +25,17 @@ postgres=# \l
 postgres=# 
 
 ```
+**Create Database**
+```
+postgres=# CREATE DATABASE test;
+CREATE DATABASE
+postgres=# 
+
+```
+**Drop Database**
+```
+postgres=# DROP DATABASE test;
+CREATE DATABASE
+postgres=# 
+
+```
