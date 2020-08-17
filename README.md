@@ -23,6 +23,10 @@
 - **Username:** postgres (as a default)
 - **Password:** passw0rd (as a default)
 
+## Access to postgres using terminal:
+```
+docker exec -it postgres psql -U postgres
+```
 ## Access to PgAdmin: 
 - **URL:** `http://localhost:8080`
 - **Username:** shamim.rhce@gmail.com (as a default)
