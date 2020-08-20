@@ -99,7 +99,7 @@ CREATE TABLE person (
 ```
 
 **Insert into the table**
-````
+```
 postgres=# INSERT INTO person (first_name, last_name, gender, date_of_birth) VALUES('Shamim', 'Akhtar', 'Male', '1987-12-02');
 
 
@@ -130,9 +130,10 @@ Find the name and id of the Docker container hosting the Postgres instance
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                           NAMES
 91865223f3e7        dpage/pgadmin4:4.24    "/entrypoint.sh"         19 seconds ago      Up 17 seconds       443/tcp, 0.0.0.0:8080->80/tcp   pgadmin
 c4a425bb92c1        postgres:12.4-alpine   "docker-entrypoint.s…"   19 seconds ago      Up 17 seconds       0.0.0.0:5432->5432/tcp          postgres
-
 ```
+
 Find the volumes available in the Docker container
+
 ```
 docker inspect -f '{{ json .Mounts }}' <container_id> | python -m json.tool
 
@@ -160,8 +161,8 @@ docker cp ./SQL/person.sql postgres:/var/lib/postgresql/data/
 ```
 
 Now populate sql from postgres cli
+
 ```
 postgres=# \i /var/lib/postgresql/data/person.sql;
-
 ```
 
