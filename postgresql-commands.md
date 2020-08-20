@@ -186,7 +186,7 @@ postgres=# \i /var/lib/postgresql/data/person.sql;
 
 **Between**
 ```
-test=# select * from person where date_of_birth between DATE '2019-01-01' AND '2019-12-31';
+test=# SELECT * FROM person WHERE date_of_birth BETWEEN DATE '2019-01-01' AND '2019-12-31';
  id  | first_name |  last_name  |               email               | gender | date_of_birth | country_of_birth 
 -----+------------+-------------+-----------------------------------+--------+---------------+------------------
  131 | Marybeth   | Coverley    | mcoverley3m@yale.edu              | Female | 2019-02-28    | Philippines
@@ -207,8 +207,135 @@ test=# select * from person where date_of_birth between DATE '2019-01-01' AND '2
 (15 rows)
 
 ```
-**Like And iLike**
+**Like**
+```
+test=# SELECT * FROM person WHERE email LIKE '%xing.com';
+ id  | first_name | last_name |         email         | gender | date_of_birth | country_of_birth 
+-----+------------+-----------+-----------------------+--------+---------------+------------------
+  41 | Jere       | Bosward   | jbosward14@xing.com   | Male   | 1981-11-22    | Poland
+ 646 | Bethanne   | Patek     | bpatekhx@xing.com     | Female | 2010-05-09    | United States
+ 668 | Tine       | Carbonell | tcarbonellij@xing.com | Female | 2005-09-14    | Poland
+ 798 | Valry      | Smither   | vsmitherm5@xing.com   | Female | 1950-01-06    | Indonesia
+ 863 | Gabby      | Sharpe    | gsharpeny@xing.com    | Male   | 1951-06-16    | Norway
+(5 rows)
 
+test=# 
+```
+```
+test=# SELECT * FROM person WHERE email LIKE '%@google.com';
+ id  | first_name | last_name |         email         | gender | date_of_birth | country_of_birth 
+-----+------------+-----------+-----------------------+--------+---------------+------------------
+ 284 | Jasmine    | Minshaw   | jminshaw7v@google.com | Female | 2013-05-15    | China
+(1 row)
+
+test=# SELECT * FROM person WHERE email LIKE '%@google.%';
+ id  |  first_name  |   last_name    |              email              | gender | date_of_birth |  country_of_birth  
+-----+--------------+----------------+---------------------------------+--------+---------------+--------------------
+  10 | Charmian     | Lambell        | clambell9@google.com.hk         | Female | 1992-12-31    | Ukraine
+  17 | Galen        | Wankling       | gwanklingg@google.com.au        | Male   | 1950-08-12    | China
+ 100 | Leroi        | Leivers        | lleivers2r@google.co.uk         | Male   | 2003-08-10    | Malaysia
+ 105 | Marie-jeanne | Kopp           | mkopp2w@google.it               | Female | 1948-09-01    | Indonesia
+ 146 | Derby        | Biddle         | dbiddle41@google.co.uk          | Male   | 1999-02-20    | Indonesia
+ 176 | Danyette     | Linskey        | dlinskey4v@google.pl            | Female | 2005-01-09    | South Korea
+ 202 | Clary        | Brawley        | cbrawley5l@google.de            | Female | 2004-09-17    | China
+ 230 | Zahara       | Burchett       | zburchett6d@google.com.au       | Female | 1977-08-20    | China
+ 263 | Deeyn        | Thackray       | dthackray7a@google.es           | Female | 1969-08-13    | Sweden
+ 284 | Jasmine      | Minshaw        | jminshaw7v@google.com           | Female | 2013-05-15    | China
+ 287 | Sidnee       | Paulou         | spaulou7y@google.it             | Male   | 1994-06-27    | China
+ 321 | Joceline     | Baine          | jbaine8w@google.co.jp           | Female | 1956-01-28    | Argentina
+ 330 | Conrado      | Leeke          | cleeke95@google.pl              | Male   | 2020-05-25    | Indonesia
+ 387 | Eduino       | Poundsford     | epoundsfordaq@google.fr         | Male   | 1970-03-25    | Philippines
+ 427 | George       | Lune           | glunebu@google.ca               | Male   | 1988-02-24    | Chile
+ 470 | Poppy        | Whiskerd       | pwhiskerdd1@google.com.br       | Female | 1975-04-22    | United States
+ 584 | Sergei       | Mustin         | smusting7@google.pl             | Male   | 1997-02-05    | Ukraine
+ 593 | Sinclare     | Jimson         | sjimsongg@google.fr             | Male   | 1995-12-26    | Indonesia
+ 610 | Phillie      | Fearnill       | pfearnillgx@google.com.hk       | Female | 1976-10-09    | China
+ 612 | Danika       | aManger        | damangergz@google.es            | Female | 2000-01-26    | United States
+ 669 | Budd         | Rodger         | brodgerik@google.pl             | Male   | 1973-07-09    | Greece
+ 678 | Leah         | Lidyard        | llidyardit@google.ca            | Female | 2020-01-27    | Vietnam
+ 694 | Vassily      | Alelsandrovich | valelsandrovichj9@google.com.au | Male   | 1979-07-04    | Sweden
+ 695 | Mendie       | Cambden        | mcambdenja@google.co.jp         | Male   | 2020-04-12    | Honduras
+ 728 | Archambault  | Demcik         | ademcikk7@google.es             | Male   | 2010-11-11    | Brazil
+ 732 | Belia        | Nortcliffe     | bnortcliffekb@google.ru         | Female | 2005-08-04    | Dominican Republic
+ 742 | Meier        | Girke          | mgirkekl@google.ca              | Male   | 1948-10-07    | Portugal
+ 752 | Darrell      | Ciobutaro      | dciobutarokv@google.it          | Male   | 1973-07-07    | China
+ 916 | Mallissa     | Mangan         | mmanganpf@google.com.br         | Female | 1997-11-14    | Poland
+ 936 | Francoise    | Filchakov      | ffilchakovpz@google.de          | Female | 2006-01-16    | Azerbaijan
+ 942 | Herc         | Ruit           | hruitq5@google.co.uk            | Male   | 2005-02-18    | Serbia
+ 967 | Hatty        | Martynka       | hmartynkaqu@google.nl           | Female | 2002-04-24    | Bahrain
+ 979 | Goraud       | Vaudrey        | gvaudreyr6@google.cn            | Male   | 1958-04-25    | Canada
+ 981 | Ogdon        | Bosley         | obosleyr8@google.pl             | Male   | 1949-04-11    | France
+(34 rows)
+
+test=# 
+```
+**Single character with underscore (_)**
+```
+test=# SELECT * FROM person WHERE email LIKE '______@%';
+ id  | first_name | last_name |           email            | gender | date_of_birth | country_of_birth 
+-----+------------+-----------+----------------------------+--------+---------------+------------------
+  15 | Armando    | Hume      | ahumee@topsy.com           | Male   | 2001-04-30    | Ukraine
+  30 | Lorens     | Kirk      | lkirkt@eepurl.com          | Male   | 2013-10-15    | Indonesia
+ 239 | Jerrine    | Say       | jsay6m@hubpages.com        | Female | 1965-08-12    | United States
+ 261 | Gerardo    | Axe       | gaxe78@va.gov              | Male   | 2015-05-10    | Kuwait
+ 295 | Carmel     | Esh       | cesh86@pinterest.com       | Female | 1959-12-02    | Sweden
+ 341 | Enos       | Odo       | eodo9g@naver.com           | Male   | 1968-04-11    | Russia
+ 436 | Emiline    | Yon       | eyonc3@opera.com           | Female | 2003-10-15    | Sweden
+ 693 | Noami      | Raw       | nrawj8@cdc.gov             | Female | 1979-12-30    | Luxembourg
+ 823 | Chan       | Mix       | cmixmu@guardian.co.uk      | Male   | 1949-03-21    | Indonesia
+ 868 | Leanora    | Roe       | lroeo3@bing.com            | Female | 1951-01-21    | Poland
+ 975 | Elisabet   | Dix       | edixr2@cargocollective.com | Female | 1965-04-04    | Brazil
+(11 rows)
+
+test=# 
+```
+**iLike**
+```
+test=# SELECT * FROM person WHERE country_of_birth LIKE 'a%';
+ id | first_name | last_name | email | gender | date_of_birth | country_of_birth 
+----+------------+-----------+-------+--------+---------------+------------------
+(0 rows)
+
+test=# SELECT * FROM person WHERE country_of_birth ILIKE 'a%';
+ id  | first_name | last_name  |             email              | gender | date_of_birth | country_of_birth 
+-----+------------+------------+--------------------------------+--------+---------------+------------------
+   5 | Isaiah     | Titmuss    | ititmuss4@epa.gov              | Male   | 2015-04-25    | Albania
+  26 | Jacquelyn  | Mowat      | jmowatp@blinklist.com          | Female | 1960-07-23    | Albania
+  34 | Thaine     | Oades      | toadesx@cpanel.net             | Male   | 1964-03-04    | Argentina
+  49 | Lorita     | Allcoat    | lallcoat1c@unblog.fr           | Female | 1998-04-02    | Argentina
+  81 | Minni      | Roocroft   | mroocroft28@thetimes.co.uk     | Female | 2004-12-17    | Armenia
+  85 | Lalo       | Alden      | lalden2c@nymag.com             | Male   | 2007-07-13    | Argentina
+ 214 | Ramon      | Grafom     | rgrafom5x@indiegogo.com        | Male   | 2005-01-26    | Argentina
+ 255 | Effie      | Kluss      | ekluss72@phoca.cz              | Female | 2005-04-01    | Angola
+ 291 | John       | Reace      | jreace82@taobao.com            | Male   | 1960-09-13    | Albania
+ 296 | Marv       | MacCathay  | mmaccathay87@imageshack.us     | Male   | 2019-02-01    | Afghanistan
+ 297 | Burty      | Bester     | bbester88@ezinearticles.com    | Male   | 1953-11-21    | Argentina
+ 304 | Charo      | Loxdale    | cloxdale8f@drupal.org          | Female | 1997-12-08    | Argentina
+ 321 | Joceline   | Baine      | jbaine8w@google.co.jp          | Female | 1956-01-28    | Argentina
+ 384 | Obidiah    | Dallemore  | odallemorean@hostgator.com     | Male   | 2005-04-27    | Afghanistan
+ 521 | Wallis     | Gravenell  | wgravenelleg@yolasite.com      | Female | 1965-11-02    | Afghanistan
+ 550 | Herbie     | Gummie     | hgummief9@spiegel.de           | Male   | 2013-10-04    | Argentina
+ 553 | Chev       | Rutigliano | crutiglianofc@newyorker.com    | Male   | 1964-05-07    | Argentina
+ 664 | Dionne     | Costy      | dcostyif@discuz.net            | Female | 1960-09-24    | Argentina
+ 670 | Cobb       | Rawlin     | crawlinil@jalbum.net           | Male   | 1992-02-21    | Armenia
+ 714 | Franni     | Proger     | fprogerjt@tamu.edu             | Female | 1949-08-07    | Afghanistan
+ 736 | Shirline   | Chaloner   | schalonerkf@sfgate.com         | Female | 1999-02-02    | Azerbaijan
+ 763 | Egor       | Clemes     | eclemesl6@hubpages.com         | Male   | 1999-08-03    | Argentina
+ 816 | Kennett    | Lembrick   | klembrickmn@amazon.co.uk       | Male   | 1982-11-18    | Afghanistan
+ 878 | Dorey      | Hunnicot   | dhunnicotod@wikipedia.org      | Female | 1948-12-18    | Argentina
+ 883 | Alikee     | Itzakson   | aitzaksonoi@bbc.co.uk          | Female | 2016-11-21    | Argentina
+ 886 | Crichton   | Girth      | cgirthol@opera.com             | Male   | 1989-08-14    | Argentina
+ 905 | Taddeo     | Staveley   | tstaveleyp4@simplemachines.org | Male   | 1994-10-25    | Afghanistan
+ 930 | Lindon     | Goldie     | lgoldiept@dmoz.org             | Male   | 1982-06-04    | Afghanistan
+ 936 | Francoise  | Filchakov  | ffilchakovpz@google.de         | Female | 2006-01-16    | Azerbaijan
+ 938 | Cecilia    | Bambury    | cbamburyq1@imgur.com           | Female | 2006-05-12    | Argentina
+ 952 | Silvano    | Commuzzo   | scommuzzoqf@accuweather.com    | Male   | 1995-03-28    | Argentina
+ 970 | Andres     | Rumbold    | arumboldqx@ibm.com             | Male   | 1978-09-14    | Armenia
+ 983 | Mina       | Alcorn     | malcornra@redcross.org         | Female | 2001-08-31    | Armenia
+(33 rows)
+
+test=# 
+```
 **Group By**
 
 **Group By Having**
