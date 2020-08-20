@@ -165,4 +165,119 @@ Now populate sql from postgres cli
 ```
 postgres=# \i /var/lib/postgresql/data/person.sql;
 ```
+****
+
+**SQL Select From**
+
+
+**Order by**
+
+**Distinct**
+
+**Where Clause and AND**
+
+
+**Comparison Operators**
+
+**Limit, Offset & Fetch**
+
+**IN**
+
+
+**Between**
+```
+test=# select * from person where date_of_birth between DATE '2019-01-01' AND '2019-12-31';
+ id  | first_name |  last_name  |               email               | gender | date_of_birth | country_of_birth 
+-----+------------+-------------+-----------------------------------+--------+---------------+------------------
+ 131 | Marybeth   | Coverley    | mcoverley3m@yale.edu              | Female | 2019-02-28    | Philippines
+ 164 | Laurianne  | Ferier      | lferier4j@de.vu                   | Female | 2019-02-17    | Portugal
+ 251 | Catriona   | Tatershall  | ctatershall6y@acquirethisname.com | Female | 2019-11-19    | Russia
+ 274 | Concettina | Nan Carrow  | cnancarrow7l@newsvine.com         | Female | 2019-06-30    | China
+ 296 | Marv       | MacCathay   | mmaccathay87@imageshack.us        | Male   | 2019-02-01    | Afghanistan
+ 316 | Eleanor    | Wasielewicz | ewasielewicz8r@usnews.com         | Female | 2019-07-08    | Indonesia
+ 423 | Gabe       | Tollerfield | gtollerfieldbq@java.com           | Male   | 2019-10-14    | Russia
+ 543 | Idelle     | Burgane     | iburganef2@skype.com              | Female | 2019-06-05    | Vietnam
+ 579 | Rogerio    | Daine       | rdaineg2@gizmodo.com              | Male   | 2019-04-23    | Philippines
+ 638 | Allayne    | Rowlstone   | arowlstonehp@hatena.ne.jp         | Male   | 2019-04-03    | Thailand
+ 710 | Ramona     | Kidstone    | rkidstonejp@aol.com               | Female | 2019-04-14    | South Africa
+ 762 | Birch      | Tebb        | btebbl5@mozilla.com               | Male   | 2019-09-16    | Indonesia
+ 826 | Darcie     | Verdie      | dverdiemx@bing.com                | Female | 2019-01-25    | Switzerland
+ 887 | Kerk       | Geraldini   | kgeraldiniom@ucoz.com             | Male   | 2019-10-29    | Ukraine
+ 968 | Brande     | Goulbourne  | bgoulbourneqv@un.org              | Female | 2019-12-06    | Indonesia
+(15 rows)
+
+```
+**Like And iLike**
+
+**Group By**
+
+**Group By Having**
+
+**Adding New Table And Data Using Mockaroo**
+
+**Calculating Min, Max & Average**
+
+**Sum**
+
+
+**Basics of Arithmetic Operators**
+
+ **Arithmetic Operators (ROUND)**
+
+ **Alias**
+
+**Coalesce**
+
+**NULLIF**
+
+**Timestamps And Dates Course**
+
+ **Adding And Subtracting With Dates**
+
+ **Extracting Fields From Timestamp**
+
+ **Age Function**
+
+ **What Are Primary Keys**
+
+ **Understanding Primary Keys**
+
+ **Adding Primary Key**
+
+ **Unique Constraints**
+
+ **Check Constraints**
+
+ **How to Delete Records**
+
+ **How to Update Records**
+
+ **On Conflict Do Nothing**
+
+ **Upsert**
+
+**What Is A Relationship/Foreign Keys**
+
+**Adding Relationship Between Tables**
+
+**Updating Foreign Keys Columns**
+
+**Inner Joins**
+
+**Left Joins**
+
+**Deleting Records With Foreign Keys**
+
+**Exporting Query Results to CSV**
+
+**Serial & Sequences**
+
+**Extensions**
+
+**Understanding UUID Data Type**
+
+**UUID As Primary Keys**
+
+
+
 
