@@ -7,9 +7,9 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-passw0rd}
-      PGDATA: /var/lib/data/postgres
+      PGDATA: /var/lib/postgresql/data
     volumes:
-       - postgres:/var/lib/data/postgres
+       - postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
