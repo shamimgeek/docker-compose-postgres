@@ -628,8 +628,9 @@ test=# SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth H
 
 ```
 **Adding New Table And Data Using Mockaroo**
-```
 ![mock_data_car](./images/mock_data_car.png)
+
+```
 docker cp ./SQL/car.sql postgres:/var/lib/postgresql/data/
 test=#\i /var/lib/postgresql/data/car.sql;
 ```
