@@ -337,15 +337,378 @@ test=# SELECT * FROM person WHERE country_of_birth ILIKE 'a%';
 test=# 
 ```
 **Group By**
+```
+test=# SELECT country_of_birth, count(*) FROM person GROUP BY country_of_birth;
+         country_of_birth         | count 
+----------------------------------+-------
+ Bangladesh                       |     3
+ Indonesia                        |   115
+ Venezuela                        |     7
+ Luxembourg                       |     3
+ Czech Republic                   |    14
+ Sweden                           |    29
+ Uganda                           |     5
+ Jordan                           |     2
+ Dominican Republic               |     4
+ Ireland                          |     3
+ Macedonia                        |     1
+ Papua New Guinea                 |     1
+ Sri Lanka                        |     1
+ Uzbekistan                       |     5
+ Finland                          |     2
+ Portugal                         |    37
+ Malta                            |     1
+ Colombia                         |    19
+ Albania                          |     3
+ Saudi Arabia                     |     3
+ Ukraine                          |    17
+ Cuba                             |     4
+ Latvia                           |     3
+ North Korea                      |     1
+ Kyrgyzstan                       |     2
+ France                           |    25
+ Cape Verde                       |     1
+ Maldives                         |     1
+ Israel                           |     4
+ Kenya                            |     1
+ Ghana                            |     1
+ Senegal                          |     1
+ Malaysia                         |     5
+ Zambia                           |     1
+ Madagascar                       |     2
+ Kuwait                           |     1
+ Sierra Leone                     |     1
+ Bosnia and Herzegovina           |     7
+ Philippines                      |    50
+ Benin                            |     1
+ United States                    |    25
+ Guinea                           |     1
+ Nigeria                          |     5
+ Tajikistan                       |     1
+ Comoros                          |     1
+ China                            |   163
+ New Caledonia                    |     2
+ Belarus                          |     3
+ Armenia                          |     4
+ Netherlands                      |     1
+ Serbia                           |     5
+ Mauritius                        |     5
+ Angola                           |     1
+ Bahrain                          |     1
+ Vanuatu                          |     1
+ Spain                            |     3
+ Georgia                          |     1
+ Malawi                           |     2
+ Belgium                          |     1
+ Democratic Republic of the Congo |     3
+ Bhutan                           |     1
+ Thailand                         |    10
+ El Salvador                      |     1
+ United Kingdom                   |     6
+ Germany                          |     2
+ Canada                           |    10
+ South Korea                      |     7
+ Argentina                        |    16
+ Azerbaijan                       |     2
+ Slovenia                         |     2
+ Egypt                            |     2
+ Greece                           |    13
+ Afghanistan                      |     7
+ Chad                             |     1
+ Iran                             |     2
+ Chile                            |     7
+ Gambia                           |     1
+ Estonia                          |     1
+ Vietnam                          |     9
+ South Africa                     |     7
+ Peru                             |    22
+ Kazakhstan                       |     2
+ Japan                            |    15
+ Ivory Coast                      |     1
+ Denmark                          |     1
+ Mongolia                         |     3
+ Mauritania                       |     1
+ Switzerland                      |     1
+ Ecuador                          |     2
+ New Zealand                      |     4
+ Hungary                          |     3
+ Russia                           |    67
+ Norway                           |     4
+ Honduras                         |     5
+ Pakistan                         |     6
+ Brazil                           |    41
+ Guatemala                        |     2
+ Guinea-Bissau                    |     1
+ Bolivia                          |     3
+ Ethiopia                         |     2
+ Niger                            |     1
+ Panama                           |     2
+ Yemen                            |     4
+ Bulgaria                         |     3
+ Turkmenistan                     |     1
+ Croatia                          |     3
+ Tunisia                          |     3
+ Sudan                            |     3
+ Morocco                          |     1
+ Moldova                          |     3
+ Myanmar                          |     3
+ Nicaragua                        |     2
+ Mexico                           |     8
+ Tanzania                         |     5
+ Palestinian Territory            |     7
+ Poland                           |    39
+ Costa Rica                       |     2
+ Haiti                            |     1
+(118 rows)
+
+```
 
 **Group By Having**
+```
+test=# SELECT country_of_birth, count(*) FROM person GROUP BY country_of_birth ORDER BY country_of_birth;
+         country_of_birth         | count 
+----------------------------------+-------
+ Afghanistan                      |     7
+ Albania                          |     3
+ Angola                           |     1
+ Argentina                        |    16
+ Armenia                          |     4
+ Azerbaijan                       |     2
+ Bahrain                          |     1
+ Bangladesh                       |     3
+ Belarus                          |     3
+ Belgium                          |     1
+ Benin                            |     1
+ Bhutan                           |     1
+ Bolivia                          |     3
+ Bosnia and Herzegovina           |     7
+ Brazil                           |    41
+ Bulgaria                         |     3
+ Canada                           |    10
+ Cape Verde                       |     1
+ Chad                             |     1
+ Chile                            |     7
+ China                            |   163
+ Colombia                         |    19
+ Comoros                          |     1
+ Costa Rica                       |     2
+ Croatia                          |     3
+ Cuba                             |     4
+ Czech Republic                   |    14
+ Democratic Republic of the Congo |     3
+ Denmark                          |     1
+ Dominican Republic               |     4
+ Ecuador                          |     2
+ Egypt                            |     2
+ El Salvador                      |     1
+ Estonia                          |     1
+ Ethiopia                         |     2
+ Finland                          |     2
+ France                           |    25
+ Gambia                           |     1
+ Georgia                          |     1
+ Germany                          |     2
+ Ghana                            |     1
+ Greece                           |    13
+ Guatemala                        |     2
+ Guinea                           |     1
+ Guinea-Bissau                    |     1
+ Haiti                            |     1
+ Honduras                         |     5
+ Hungary                          |     3
+ Indonesia                        |   115
+ Iran                             |     2
+ Ireland                          |     3
+ Israel                           |     4
+ Ivory Coast                      |     1
+ Japan                            |    15
+ Jordan                           |     2
+ Kazakhstan                       |     2
+ Kenya                            |     1
+ Kuwait                           |     1
+ Kyrgyzstan                       |     2
+ Latvia                           |     3
+ Luxembourg                       |     3
+ Macedonia                        |     1
+ Madagascar                       |     2
+ Malawi                           |     2
+ Malaysia                         |     5
+ Maldives                         |     1
+ Malta                            |     1
+ Mauritania                       |     1
+ Mauritius                        |     5
+ Mexico                           |     8
+ Moldova                          |     3
+ Mongolia                         |     3
+ Morocco                          |     1
+ Myanmar                          |     3
+ Netherlands                      |     1
+ New Caledonia                    |     2
+ New Zealand                      |     4
+ Nicaragua                        |     2
+ Niger                            |     1
+ Nigeria                          |     5
+ North Korea                      |     1
+ Norway                           |     4
+ Pakistan                         |     6
+ Palestinian Territory            |     7
+ Panama                           |     2
+ Papua New Guinea                 |     1
+ Peru                             |    22
+ Philippines                      |    50
+ Poland                           |    39
+ Portugal                         |    37
+ Russia                           |    67
+ Saudi Arabia                     |     3
+ Senegal                          |     1
+ Serbia                           |     5
+ Sierra Leone                     |     1
+ Slovenia                         |     2
+ South Africa                     |     7
+ South Korea                      |     7
+ Spain                            |     3
+ Sri Lanka                        |     1
+ Sudan                            |     3
+ Sweden                           |    29
+ Switzerland                      |     1
+ Tajikistan                       |     1
+ Tanzania                         |     5
+ Thailand                         |    10
+ Tunisia                          |     3
+ Turkmenistan                     |     1
+ Uganda                           |     5
+ Ukraine                          |    17
+ United Kingdom                   |     6
+ United States                    |    25
+ Uzbekistan                       |     5
+ Vanuatu                          |     1
+ Venezuela                        |     7
+ Vietnam                          |     9
+ Yemen                            |     4
+ Zambia                           |     1
+(118 rows)
 
+```
+**Order by and having**
+```
+test=# SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(*) > 5 ORDER BY country_of_birth;
+    country_of_birth    | count 
+------------------------+-------
+ Afghanistan            |     7
+ Argentina              |    16
+ Bosnia and Herzegovina |     7
+ Brazil                 |    41
+ Canada                 |    10
+ Chile                  |     7
+ China                  |   163
+ Colombia               |    19
+ Czech Republic         |    14
+ France                 |    25
+ Greece                 |    13
+ Indonesia              |   115
+ Japan                  |    15
+ Mexico                 |     8
+ Pakistan               |     6
+ Palestinian Territory  |     7
+ Peru                   |    22
+ Philippines            |    50
+ Poland                 |    39
+ Portugal               |    37
+ Russia                 |    67
+ South Africa           |     7
+ South Korea            |     7
+ Sweden                 |    29
+ Thailand               |    10
+ Ukraine                |    17
+ United Kingdom         |     6
+ United States          |    25
+ Venezuela              |     7
+ Vietnam                |     9
+(30 rows)
+
+```
 **Adding New Table And Data Using Mockaroo**
-
+```
+![mock_data_car](./images/mock_data_car.png)
+docker cp ./SQL/car.sql postgres:/var/lib/postgresql/data/
+test=#\i /var/lib/postgresql/data/car.sql;
+```
 **Calculating Min, Max & Average**
+```
+test=# SELECT MAX(price) FROM car;
+   max    
+----------
+ 99977.77
+(1 row)
 
+test=# SELECT MIN(price) FROM car;
+   min    
+----------
+ 10004.02
+(1 row)
+
+test=# SELECT AVG(price) FROM car;
+        avg         
+--------------------
+ 54749.887760000000
+(1 row)
+
+test=# SELECT ROUND(AVG(price)) FROM car;
+ round 
+-------
+ 54750
+(1 row)
+
+test=# 
+```
+```
+test=# SELECT make,model, MIN(price) FROM car GROUP BY make,model limit 5;
+     make      |    model     |   min    
+---------------+--------------+----------
+ Dodge         | Dynasty      | 20122.52
+ Pontiac       | GTO          | 13474.44
+ Toyota        | Land Cruiser | 24105.78
+ Mitsubishi    | Sigma        | 56004.23
+ Mercedes-Benz | S-Class      | 12745.91
+(5 rows)
+
+test=#
+```
+```
+SELECT make,model, MAX(price) FROM car GROUP BY make,model limit 5;
+     make      |    model     |   max    
+---------------+--------------+----------
+ Dodge         | Dynasty      | 20122.52
+ Pontiac       | GTO          | 84281.94
+ Toyota        | Land Cruiser | 98970.85
+ Mitsubishi    | Sigma        | 56004.23
+ Mercedes-Benz | S-Class      | 88909.14
+(5 rows)
+```
+```
+SELECT make, MAX(price) FROM car GROUP BY make limit 5;
+   make   |   max    
+----------+----------
+ Ford     | 99333.97
+ Smart    | 11531.92
+ Maserati | 87641.73
+ Dodge    | 98636.05
+ Infiniti | 95521.32
+(5 rows)
+```
 **Sum**
+```
+test=# SELECT make,SUM(price) FROM car GROUP BY make limit 5;
+   make   |    sum     
+----------+------------
+ Ford     | 5465482.91
+ Smart    |   11531.92
+ Maserati |  182099.15
+ Dodge    | 2515519.58
+ Infiniti |  966709.93
+(5 rows)
 
+```
 
 **Basics of Arithmetic Operators**
 
