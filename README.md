@@ -40,3 +40,6 @@ for more postgresql commands check [here](./postgresql-commands.md)
 - **Port** `5432`
 - **Username** as `POSTGRES_USER`, by default: `postgres`
 - **Password** as `POSTGRES_PASSWORD`, by default `passw0rd`
+![add_server_to_pgadmin1](./images/add_server_to_pgadmin-1.png)
+![add_server_to_pgadmin2](./images/add_server_to_pgadmin.png)
+![add_server_to_pgadmin3](./images/add_server_to_pgadmin-3.png)

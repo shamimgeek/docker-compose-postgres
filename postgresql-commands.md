@@ -712,29 +712,184 @@ test=# SELECT make,SUM(price) FROM car GROUP BY make limit 5;
 ```
 
 **Basics of Arithmetic Operators**
-
+```
+test=# SELECT id,make,model,price, ROUND(price * .10,2) from car limit 5;
+ id |   make    |     model     |  price   |  round  
+----+-----------+---------------+----------+---------
+  1 | Honda     | CR-V          | 54286.10 | 5428.61
+  2 | Maybach   | 57            | 74847.63 | 7484.76
+  3 | Chevrolet | Suburban 1500 | 62678.03 | 6267.80
+  4 | Volvo     | S80           | 32832.14 | 3283.21
+  5 | Hyundai   | Sonata        | 39201.07 | 3920.11
+(5 rows)
+```
  **Arithmetic Operators (ROUND)**
+```
+test=# SELECT id,make,model,price, ROUND(price * .10,2) AS "10% of price", ROUND(price - (price * .10),2) AS "Rest Amt after 10%" from car limit 5;
+ id |   make    |     model     |  price   | 10% of price | Rest Amt after 10% 
+----+-----------+---------------+----------+--------------+--------------------
+  1 | Honda     | CR-V          | 54286.10 |      5428.61 |           48857.49
+  2 | Maybach   | 57            | 74847.63 |      7484.76 |           67362.87
+  3 | Chevrolet | Suburban 1500 | 62678.03 |      6267.80 |           56410.23
+  4 | Volvo     | S80           | 32832.14 |      3283.21 |           29548.93
+  5 | Hyundai   | Sonata        | 39201.07 |      3920.11 |           35280.96
+(5 rows)
 
+```
  **Alias**
-
+```
+test=# SELECT id AS "ID",make AS "MAKE",model AS "MODEL",price AS "PRICE", ROUND(price * .10,2) AS "10% Discount", ROUND(price - (price * .10),2) AS "Price after Discount" from car limit 5;
+ ID |   MAKE    |     MODEL     |  PRICE   | 10% Discount | Price after Discount 
+----+-----------+---------------+----------+--------------+----------------------
+  1 | Honda     | CR-V          | 54286.10 |      5428.61 |             48857.49
+  2 | Maybach   | 57            | 74847.63 |      7484.76 |             67362.87
+  3 | Chevrolet | Suburban 1500 | 62678.03 |      6267.80 |             56410.23
+  4 | Volvo     | S80           | 32832.14 |      3283.21 |             29548.93
+  5 | Hyundai   | Sonata        | 39201.07 |      3920.11 |             35280.96
+(5 rows
+```
 **Coalesce**
+```
+test=# SELECT COALESCE(email,'Email not provided')FROM person;
+               coalesce               
+--------------------------------------
+ fprandin0@amazon.co.jp
+ gscrase1@newyorker.com
+ aashbe2@merriam-webster.com
+ ceustanch3@stanford.edu
+ rmcpartlin4@sciencedaily.com
+ kpeeters5@youku.com
+ Email not provided
+ dfranscioni7@addtoany.com
+ cdumelow8@pagesperso-orange.fr
+ Email not provided
+ dfreiberga@hhs.gov
+ Email not provided
+ vmiddlehurstc@virginia.edu
+ dballochd@live.com
+ Email not provided
+ rcromef@slashdot.org
+ Email not provided
+ Email not provided
+ Email not provided
+ dlawrenzj@dell.com
+ qstandingfordk@sohu.com
 
+```
 **NULLIF**
-
+```
+test=# SELECT COALESCE(10 / NULLIF(0,0),0);
+ coalesce 
+----------
+        0
+(1 row)
+```
 **Timestamps And Dates Course**
+```
+test=# SELECT NOW();
+              now              
+-------------------------------
+ 2020-08-22 10:47:28.137981+00
+(1 row)
 
+test=# SELECT NOW()::DATE;
+    now     
+------------
+ 2020-08-22
+(1 row)
+
+test=# SELECT NOW()::TIME;
+       now       
+-----------------
+ 10:48:04.193382
+(1 row)
+```
  **Adding And Subtracting With Dates**
+```
+test=# SELECT NOW();
+              now              
+-------------------------------
+ 2020-08-22 10:49:46.718122+00
+(1 row)
 
+test=# SELECT NOW() - INTERVAL '1 YEAR';
+           ?column?            
+-------------------------------
+ 2019-08-22 10:50:14.951412+00
+(1 row)
+
+test=# SELECT NOW() - INTERVAL '10 YEAR';
+           ?column?            
+-------------------------------
+ 2010-08-22 10:50:27.188566+00
+(1 row)
+
+test=# 
+test=# SELECT NOW() - INTERVAL '7 MONTHS';
+           ?column?            
+-------------------------------
+ 2020-01-22 10:51:18.430986+00
+(1 row)
+
+test=# SELECT NOW() - INTERVAL '2 DAYS';
+           ?column?            
+-------------------------------
+ 2020-08-20 10:51:35.083528+00
+(1 row)
+
+```
  **Extracting Fields From Timestamp**
+```
+test=# SELECT EXTRACT(YEAR FROM NOW());
+ date_part 
+-----------
+      2020
+(1 row)
 
+test=# SELECT EXTRACT(MONTH FROM NOW());
+ date_part 
+-----------
+         8
+(1 row)
+
+test=# SELECT EXTRACT(DAY FROM NOW());
+ date_part 
+-----------
+        22
+(1 row)
+
+test=# SELECT EXTRACT(DOW FROM NOW());
+ date_part 
+-----------
+         6
+(1 row)
+
+test=# 
+```
  **Age Function**
-
+```
+test=# SELECT first_name, last_name, gender, country_of_birth, date_of_birth,  AGE(NOW(),date_of_birth) FROM person LIMIT 5;
+ first_name | last_name | gender | country_of_birth | date_of_birth |                   age                   
+------------+-----------+--------+------------------+---------------+-----------------------------------------
+ Feliks     | Prandin   | Male   | Indonesia        | 2012-10-18    | 7 years 10 mons 4 days 11:11:37.50254
+ Gabbie     | Scrase    | Female | China            | 1965-06-02    | 55 years 2 mons 20 days 11:11:37.50254
+ Alexandra  | Ashbe     | Female | Ukraine          | 1993-12-06    | 26 years 8 mons 16 days 11:11:37.50254
+ Cheston    | Eustanch  | Male   | Sweden           | 1959-10-04    | 60 years 10 mons 18 days 11:11:37.50254
+ Ruthe      | McPartlin | Female | China            | 1998-02-25    | 22 years 5 mons 25 days 11:11:37.50254
+(5 rows)
+```
  **What Are Primary Keys**
 
  **Understanding Primary Keys**
 
+ **DROP Primary Key constrints**
+ ```
+ ALTER TABLE person DROP CONSTRAINT person_pkey;
+ ```
  **Adding Primary Key**
-
+ ```
+ ALTER TABLE person ADD PRIMARY KEY(id);
+ ```
  **Unique Constraints**
 
  **Check Constraints**
