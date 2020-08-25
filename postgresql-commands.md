@@ -892,26 +892,316 @@ test=# SELECT first_name, last_name, gender, country_of_birth, date_of_birth,  A
  ```
  **Unique Constraints**
 
+ ```
+ test=# ALTER TABLE person ADD CONSTRAINT unique_email_address UNIQUE(email);
+test=# 
+test=# \d person;
+                                         Table "public.person"
+      Column      |          Type          | Collation | Nullable |              Default               
+------------------+------------------------+-----------+----------+------------------------------------
+ id               | bigint                 |           | not null | nextval('person_id_seq'::regclass)
+ first_name       | character varying(50)  |           | not null | 
+ last_name        | character varying(50)  |           | not null | 
+ email            | character varying(150) |           |          | 
+ gender           | character varying(7)   |           | not null | 
+ date_of_birth    | date                   |           | not null | 
+ country_of_birth | character varying(50)  |           |          | 
+Indexes:
+    "person_pkey" PRIMARY KEY, btree (id)
+    "unique_email_address" UNIQUE CONSTRAINT, btree (email)
+
+ ```
+ **or**
+ ```
+ test=# ALTER TABLE person ADD UNIQUE(email);
+ALTER TABLE
+test=# \d person;
+                                         Table "public.person"
+      Column      |          Type          | Collation | Nullable |              Default               
+------------------+------------------------+-----------+----------+------------------------------------
+ id               | bigint                 |           | not null | nextval('person_id_seq'::regclass)
+ first_name       | character varying(50)  |           | not null | 
+ last_name        | character varying(50)  |           | not null | 
+ email            | character varying(150) |           |          | 
+ gender           | character varying(7)   |           | not null | 
+ date_of_birth    | date                   |           | not null | 
+ country_of_birth | character varying(50)  |           |          | 
+Indexes:
+    "person_pkey" PRIMARY KEY, btree (id)
+    "person_email_key" UNIQUE CONSTRAINT, btree (email)
+
+ ```
  **Check Constraints**
+ ```
+ ALTER TABLE person ADD CONSTRAINT gender_constrint or  CHECK (gender = 'Female' OR gender = 'Male');
+ OR
+ test=# ALTER TABLE person ADD CHECK (gender = 'Female' OR gender = 'Male');
+ALTER TABLE
+test=# \d person;
+                                         Table "public.person"
+      Column      |          Type          | Collation | Nullable |              Default               
+------------------+------------------------+-----------+----------+------------------------------------
+ id               | bigint                 |           | not null | nextval('person_id_seq'::regclass)
+ first_name       | character varying(50)  |           | not null | 
+ last_name        | character varying(50)  |           | not null | 
+ email            | character varying(150) |           |          | 
+ gender           | character varying(7)   |           | not null | 
+ date_of_birth    | date                   |           | not null | 
+ country_of_birth | character varying(50)  |           |          | 
+Indexes:
+    "person_pkey" PRIMARY KEY, btree (id)
+    "person_email_key" UNIQUE CONSTRAINT, btree (email)
+Check constraints:
+    "person_gender_check" CHECK (gender::text = 'Female'::text OR gender::text = 'Male'::text)
 
+ ```
  **How to Delete Records**
+```
+test=# DELETE FROM person WHERE ID = 2;
+test=# SELECT * FROM person LIMIT 10;
+ id | first_name | last_name  |             email              | gender | date_of_birth | country_of_birth 
+----+------------+------------+--------------------------------+--------+---------------+------------------
+  1 | Feliks     | Prandin    | fprandin0@amazon.co.jp         | Male   | 2012-10-18    | Indonesia
+  3 | Alexandra  | Ashbe      | aashbe2@merriam-webster.com    | Female | 1993-12-06    | Ukraine
+  4 | Cheston    | Eustanch   | ceustanch3@stanford.edu        | Male   | 1959-10-04    | Sweden
+  5 | Ruthe      | McPartlin  | rmcpartlin4@sciencedaily.com   | Female | 1998-02-25    | China
+  6 | Katerina   | Peeters    | kpeeters5@youku.com            | Female | 1979-05-10    | Brazil
+  7 | Walden     | Leirmonth  |                                | Male   | 2013-08-24    | Argentina
+  8 | Donelle    | Franscioni | dfranscioni7@addtoany.com      | Female | 1967-01-26    | Pakistan
+  9 | Curtis     | Dumelow    | cdumelow8@pagesperso-orange.fr | Male   | 2010-04-05    | Germany
+ 10 | Hana       | Riggert    |                                | Female | 1954-07-02    | Ukraine
+ 11 | Dur        | Freiberg   | dfreiberga@hhs.gov             | Male   | 2012-10-08    | United States
+(10 rows)
 
+```
+```
+test=# DELETE FROM person WHERE gender = 'Male';
+DELETE 535
+
+```
  **How to Update Records**
+```
+test=# select * from person limit 1;
+ id | first_name | last_name |            email            | gender | date_of_birth | country_of_birth 
+----+------------+-----------+-----------------------------+--------+---------------+------------------
+  3 | Alexandra  | Ashbe     | aashbe2@merriam-webster.com | Female | 1993-12-06    | Ukraine
+(1 row)
 
+test=# 
+test=# select * from person WHERE country_of_birth = 'Pakistan' limit 1;
+ id | first_name | last_name  |           email           | gender | date_of_birth | country_of_birth 
+----+------------+------------+---------------------------+--------+---------------+------------------
+  8 | Donelle    | Franscioni | dfranscioni7@addtoany.com | Female | 1967-01-26    | Pakistan
+(1 row)
+
+test=# 
+test=# UPDATE person SET first_name = 'Jahir', last_name = 'Khan' Where id = 8 ;
+UPDATE 1
+test=# SELECT * FROM person WHERE id = 8;
+ id | first_name | last_name |           email           | gender | date_of_birth | country_of_birth 
+----+------------+-----------+---------------------------+--------+---------------+------------------
+  8 | Jahir      | Khan      | dfranscioni7@addtoany.com | Female | 1967-01-26    | Pakistan
+(1 row)
+
+```
  **On Conflict Do Nothing**
+```
+test=# insert into person (id, first_name, last_name, email, gender, date_of_birth, country_of_birth) values (10, 'Hana', 'Riggert', null, 'Female', '7/2/1954', 'Ukraine');
+ERROR:  duplicate key value violates unique constraint "person_pkey"
+DETAIL:  Key (id)=(10) already exists.
+test=# 
+test=# 
+test=# insert into person (id, first_name, last_name, email, gender, date_of_birth, country_of_birth) values (10, 'Hana', 'Riggert', null, 'Female', '7/2/1954', 'Ukraine') ON CONFLICT (id) DO NOTHING;
+INSERT 0 0
+test=# 
+```
 
  **Upsert**
+```
+test=# select * from person where id = 10;
+ id | first_name | last_name | email | gender | date_of_birth | country_of_birth 
+----+------------+-----------+-------+--------+---------------+------------------
+ 10 | Hana       | Riggert   |       | Female | 1954-07-02    | Ukraine
+(1 row)
 
+test=# insert into person (id, first_name, last_name, email, gender, date_of_birth, country_of_birth) values (10, 'Hana', 'Riggert', null, 'Female', '7/2/1954', 'Ukraine') ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email;
+INSERT 0 1
+test=# select * from person where id = 10;
+ id | first_name | last_name | email | gender | date_of_birth | country_of_birth 
+----+------------+-----------+-------+--------+---------------+------------------
+ 10 | Hana       | Riggert   |       | Female | 1954-07-02    | Ukraine
+(1 row)
+
+test=# 
+test=# insert into person (id, first_name, last_name, email, gender, date_of_birth, country_of_birth) values (10, 'Hana', 'Riggert', 'hanariggert@hotmail.com', 'Female', '7/2/1954', 'Ukraine') ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email;
+INSERT 0 1
+test=# select * from person where id = 10;
+ id | first_name | last_name |          email          | gender | date_of_birth | country_of_birth 
+----+------------+-----------+-------------------------+--------+---------------+------------------
+ 10 | Hana       | Riggert   | hanariggert@hotmail.com | Female | 1954-07-02    | Ukraine
+(1 row)
+```
 **What Is A Relationship/Foreign Keys**
 
+A foreign is a referencd to primary key in another table.
+
 **Adding Relationship Between Tables**
+```
+create table car (
+	id BIGSERIAL NOT NULL PRIMARY KEY,
+	make VARCHAR(100) NOT NULL,
+	model VARCHAR(100) NOT NULL,
+	price NUMERIC(19,2) NOT NULL
+);
 
+create table person (
+	id BIGSERIAL NOT NULL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(150),
+	gender VARCHAR(7) NOT NULL,
+	date_of_birth DATE NOT NULL,
+	country_of_birth VARCHAR(50),
+  car_id BIGINT REFERENCES car (id),
+  UNIQUE(car_id)
+);
+
+
+insert into person (first_name, last_name, email, gender, date_of_birth, country_of_birth) values ('Feliks', 'Prandin', 'fprandin0@amazon.co.jp', 'Male', '10/18/2012', 'Indonesia');
+insert into person (first_name, last_name, email, gender, date_of_birth, country_of_birth) values ('Gabbie', 'Scrase', null, 'Female', '6/2/1965', 'China');
+insert into person (first_name, last_name, email, gender, date_of_birth, country_of_birth) values ('Alexandra', 'Ashbe', 'aashbe2@merriam-webster.com', 'Female', '12/6/1993', 'Ukraine');
+
+
+insert into car (make, model, price) values ('Honda', 'CR-V', '54286.10');
+insert into car (make, model, price) values ('Maybach', '57', '74847.63');
+
+```
+
+```
+test=# select * from car;
+ id |  make   | model |  price   
+----+---------+-------+----------
+  1 | Honda   | CR-V  | 54286.10
+  2 | Maybach | 57    | 74847.63
+(2 rows)
+
+test=# select * from person;
+ id | first_name | last_name |            email            | gender | date_of_birth | country_of_birth | car_id 
+----+------------+-----------+-----------------------------+--------+---------------+------------------+--------
+  1 | Feliks     | Prandin   | fprandin0@amazon.co.jp      | Male   | 2012-10-18    | Indonesia        |       
+  2 | Gabbie     | Scrase    |                             | Female | 1965-06-02    | China            |       
+  3 | Alexandra  | Ashbe     | aashbe2@merriam-webster.com | Female | 1993-12-06    | Ukraine          |       
+(3 rows)
+
+test=# 
+```
 **Updating Foreign Keys Columns**
+```
+test=# select * from car;
+ id |  make   | model |  price   
+----+---------+-------+----------
+  1 | Honda   | CR-V  | 54286.10
+  2 | Maybach | 57    | 74847.63
+(2 rows)
 
+test=# select * from person;
+ id | first_name | last_name |            email            | gender | date_of_birth | country_of_birth | car_id 
+----+------------+-----------+-----------------------------+--------+---------------+------------------+--------
+  1 | Feliks     | Prandin   | fprandin0@amazon.co.jp      | Male   | 2012-10-18    | Indonesia        |       
+  2 | Gabbie     | Scrase    |                             | Female | 1965-06-02    | China            |       
+  3 | Alexandra  | Ashbe     | aashbe2@merriam-webster.com | Female | 1993-12-06    | Ukraine          |       
+(3 rows)
+
+test=# UPDATE person SET car_id = 2 WHERE id = 1;
+UPDATE 1
+test=# SELECT * FROM person;
+ id | first_name | last_name |            email            | gender | date_of_birth | country_of_birth | car_id 
+----+------------+-----------+-----------------------------+--------+---------------+------------------+--------
+  2 | Gabbie     | Scrase    |                             | Female | 1965-06-02    | China            |       
+  3 | Alexandra  | Ashbe     | aashbe2@merriam-webster.com | Female | 1993-12-06    | Ukraine          |       
+  1 | Feliks     | Prandin   | fprandin0@amazon.co.jp      | Male   | 2012-10-18    | Indonesia        |      2
+(3 rows)
+
+test=# UPDATE person SET car_id = 2 WHERE id = 2;
+ERROR:  duplicate key value violates unique constraint "person_car_id_key"
+DETAIL:  Key (car_id)=(2) already exists.
+test=# UPDATE person SET car_id = 1 WHERE id = 2;
+UPDATE 1
+test=# SELECT * FROM person;
+ id | first_name | last_name |            email            | gender | date_of_birth | country_of_birth | car_id 
+----+------------+-----------+-----------------------------+--------+---------------+------------------+--------
+  3 | Alexandra  | Ashbe     | aashbe2@merriam-webster.com | Female | 1993-12-06    | Ukraine          |       
+  1 | Feliks     | Prandin   | fprandin0@amazon.co.jp      | Male   | 2012-10-18    | Indonesia        |      2
+  2 | Gabbie     | Scrase    |                             | Female | 1965-06-02    | China            |      1
+(3 rows)
+
+```
+**Expanded display **
+```
+test=# \x
+Expanded display is on.
+
+or 
+
+test=# \x auto;
+Expanded display is used automatically.
+test=#
+
+test=# SELECT * FROM person
+JOIN car ON person.car_id = car.id;
+-[ RECORD 1 ]----+-----------------------
+id               | 2
+first_name       | Gabbie
+last_name        | Scrase
+email            | 
+gender           | Female
+date_of_birth    | 1965-06-02
+country_of_birth | China
+car_id           | 1
+id               | 1
+make             | Honda
+model            | CR-V
+price            | 54286.10
+-[ RECORD 2 ]----+-----------------------
+id               | 1
+first_name       | Feliks
+last_name        | Prandin
+email            | fprandin0@amazon.co.jp
+gender           | Male
+date_of_birth    | 2012-10-18
+country_of_birth | Indonesia
+car_id           | 2
+id               | 2
+make             | Maybach
+model            | 57
+price            | 74847.63
+
+```
 **Inner Joins**
+```
+test=# SELECT person.first_name, car.make, car.model, car.price
+FROM person
+JOIN car ON person.car_id = car.id;
+ first_name |  make   | model |  price   
+------------+---------+-------+----------
+ Gabbie     | Honda   | CR-V  | 54286.10
+ Feliks     | Maybach | 57    | 74847.63
+(2 rows)
 
+test=#
+```
 **Left Joins**
+```
+test=# SELECT * FROM person
+test-# LEFT JOIN car  ON car.id = person.car_id;
+ id | first_name | last_name |            email            | gender | date_of_birth | country_of_birth | car_id | id |  make   | model |  price   
+----+------------+-----------+-----------------------------+--------+---------------+------------------+--------+----+---------+-------+----------
+  2 | Gabbie     | Scrase    |                             | Female | 1965-06-02    | China            |      1 |  1 | Honda   | CR-V  | 54286.10
+  1 | Feliks     | Prandin   | fprandin0@amazon.co.jp      | Male   | 2012-10-18    | Indonesia        |      2 |  2 | Maybach | 57    | 74847.63
+  3 | Alexandra  | Ashbe     | aashbe2@merriam-webster.com | Female | 1993-12-06    | Ukraine          |        |    |         |       |         
+(3 rows)
 
+```
 **Deleting Records With Foreign Keys**
 
 **Exporting Query Results to CSV**
@@ -923,7 +1213,3 @@ test=# SELECT first_name, last_name, gender, country_of_birth, date_of_birth,  A
 **Understanding UUID Data Type**
 
 **UUID As Primary Keys**
-
-
-
-
